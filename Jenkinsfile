@@ -19,3 +19,21 @@ pipeline {
         }
     }
 }
+post {
+
+success{
+
+emailext (
+subject: "Job Successfull "
+body: "Jenkins Test"
+to: "chaitanya.kore@contentserv.com"                
+)
+}
+
+failure {
+emailext (
+subject: "Job Failure "
+body: "Jenkins Test"
+to: "chaitanya.kore@contentserv.com"
+}
+}
