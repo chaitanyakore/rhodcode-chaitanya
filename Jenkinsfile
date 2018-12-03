@@ -25,14 +25,14 @@ success{
 
 emailext (
 subject: "Job Successfull "
-body: "Jenkins Test"
+body: "Jenkins job Test"
 to: "chaitanya.kore@contentserv.com"                
 )
 }
 
 failure {
 emailext (
-subject: "Job Failure "
+subject: "Job job Failure "
 body: "Jenkins Test"
 to: "chaitanya.kore@contentserv.com"
 }
