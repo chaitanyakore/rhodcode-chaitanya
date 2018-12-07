@@ -26,7 +26,7 @@ dir('test') {
                     checkout poll: false, scm: [$class: 'GitSCM', \
                         branches: [[name: '*/CS18.0']], doGenerateSubmoduleConfigurations: false, \
                         extensions: [], submoduleCfg: [], \
-                        userRemoteConfigs: [[credentialsIid: 'chaitanya', \
+                        userRemoteConfigs: [[credentialsIid: 'chaitanya_git', \
                         url: 'https://chaitanya@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
 
 
