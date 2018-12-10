@@ -1,42 +1,36 @@
 #!groovy
+
 pipeline {
-    agent any
+    agent none
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
+        stage('Build .deb packages') {
+            agent {
+                dockerfile {
+                    dir 'deb-packager'
+                    args '-v /Jenkins-CI/tools:/Jenkins-CI/tools'
+                }
             }
-        }
-        stage('Test') {
             steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-    
-
-stage('docker checkout') {
-steps{
-
-dir('test') {
+                emailext (
+                    subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                    body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                      <p>Will deploy to ${params.DEPLOY_TARGET}</p>
+                      <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+                    to: "chaitanya.kore@contentserv.com"
+                )
+                
+                dir('test') {
                     checkout poll: false, scm: [$class: 'GitSCM', \
                         branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, \
                         extensions: [], submoduleCfg: [], \
-                        userRemoteConfigs: [[credentialsIid: 'dfa6f5a3-608c-4f05-bb23-3c096c4cc430', \
-                        url: 'https://mrjenkins@git.contentserv.intern/DevOps/Deployment/CS-17.0-Ubuntu-Xenial-Installer']]]
-
-
-
-}
-}
-}
-}
-
-post {
+                        userRemoteConfigs: [[credentialsId: 'dfa6f5a3-608c-4f05-bb23-3c096c4cc430', \
+                        url: 'https://mrjenkins@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
+                }
+                
+            }
+			}
+    
+    post {
         success {
             emailext (
                 subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
@@ -54,8 +48,5 @@ post {
             )
         }
     }
-
-
-
-
+}
 }
