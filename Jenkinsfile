@@ -1,7 +1,6 @@
 #!groovy
 pipeline {
-    agent any
-
+    agent none
     stages {
         stage('Build') {
             steps {
