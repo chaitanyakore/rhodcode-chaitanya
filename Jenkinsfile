@@ -29,6 +29,17 @@ pipeline {
                 
             }
 			}
+
+
+stage('Submit to APT Repository') {
+            agent any
+            steps {
+                sh 'touch test1'
+                sh 'cp -f test1 /mnt/bootstrap-webserver/'
+            }
+        }
+
+
 }    
     post {
         success {
