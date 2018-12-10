@@ -28,7 +28,7 @@ dir('test') {
                         branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, \
                         extensions: [], submoduleCfg: [], \
                         userRemoteConfigs: [[credentialsIid: '	chaitanya', \
-                        url: 'https://chaitanya@git.contentserv.intern/DevOps/Deployment/CS-Docker-Infrastructure']]]
+                        url: 'https://chaitanya@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
 
 
 
