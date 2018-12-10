@@ -27,8 +27,8 @@ dir('test') {
                     checkout poll: false, scm: [$class: 'GitSCM', \
                         branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, \
                         extensions: [], submoduleCfg: [], \
-                        userRemoteConfigs: [[credentialsIid: 'dfa6f5a3-608c-4f05-bb23-3c096c4cc430', \
-                        url: 'https://mrjenkins@git.contentserv.intern/DevOps/Deployment/CS-Docker-Infrastructure']]]
+                        userRemoteConfigs: [[credentialsIid: '	chaitanya', \
+                        url: 'https://chaitanya@git.contentserv.intern/DevOps/Deployment/CS-Docker-Infrastructure']]]
 
 
 
