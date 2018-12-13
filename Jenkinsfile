@@ -22,18 +22,10 @@ pipeline {
                     checkout poll: false, scm: [$class: 'GitSCM', \
                         branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, \
                         extensions: [], submoduleCfg: [], \
-                        userRemoteConfigs: [[credentialsId: 'dfa6f5a3-608c-4f05-bb23-3c096c4cc430', \
-                        url: 'https://mrjenkins@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
+                        userRemoteConfigs: [[credentialsId: 'chaitanya', \
+                        url: 'https://chaitanya@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
                 }
                 
-                dir('www') {
-                    checkout poll: true, scm: [$class: 'SubversionSCM', filterChangelog: false, \
-                        ignoreDirPropChanges: false, \
-                        locations: [[credentialsId: '90e7e239-48b2-455a-a72e-68522c3e70fd', \
-                        depthOption: 'infinity', ignoreExternalsOption: false, \
-                        local: '.', remote: 'https://svn.contentserv.com/development/branches/CS18/CS18.0/admin']], \
-                        workspaceUpdater: [$class: 'UpdateUpdater']]
-                }
 }
 }
 
