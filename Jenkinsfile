@@ -7,7 +7,6 @@ pipeline {
             agent {
                 dockerfile {
                     dir 'deb-packager'
-                    args '-v /Jenkins-CI/tools:/Jenkins-CI/tools'
                 }
             }
             steps {
@@ -28,7 +27,7 @@ pipeline {
                 }
                 
             
-          sh 'ls -lR  . >  /mnt/Docker-push-dir/test'
+          sh 'pwd  >  /mnt/Docker-push-dir/test'
 			
 }
 }
