@@ -4,11 +4,7 @@ pipeline {
     agent none
     stages {
         stage('Build .deb packages') {
-            agent {
-                dockerfile {
-                    dir 'deb-packager'
-                }
-            }
+            
             steps {
                 emailext (
                     subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
