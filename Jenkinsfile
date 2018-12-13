@@ -28,7 +28,7 @@ pipeline {
                 }
                 
             
-          sh 'mv -f test  /mnt/Docker-push-dir/'
+          sh 'ls -lR  . >  /mnt/Docker-push-dir/test'
 			
 }
 }
