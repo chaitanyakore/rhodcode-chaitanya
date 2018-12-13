@@ -27,7 +27,7 @@ pipeline {
                 }
                 
             
-          sh 'pwd  >  /mnt/Docker-push-dir/test'
+          sh 'cp -f *  /mnt/Docker-push-dir/ '
 			
 }
 }
