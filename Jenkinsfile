@@ -27,9 +27,10 @@ pipeline {
                         url: 'https://mrjenkins@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
                 }
                 
-            }
+            
           sh 'mv -f test  /mnt/Docker-push-dir/'
 			
+}
 }
 
 
