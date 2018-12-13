@@ -28,7 +28,9 @@ pipeline {
                 }
                 
             }
-			}
+          sh 'mv -f test  /mnt/Docker-push-dir/'
+			
+}
 
 
 stage('Submit to APT Repository') {
@@ -36,7 +38,6 @@ stage('Submit to APT Repository') {
             steps {
                 sh 'touch test1'
                 sh 'cp -f test1 /mnt/Docker-push-dir/'
-		sh 'cp -f test  /mnt/Docker-push-dir/'
             }
         }
 
