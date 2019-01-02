@@ -18,35 +18,35 @@ pipeline {
                     to: "chaitanya.kore@contentserv.com"
                 )
                 
-                dir('test') {
+                dir('Docker-18.0') {
                     checkout poll: false, scm: [$class: 'GitSCM', \
-                        branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, \
+                        branches: [[name: '*/CS18.0']], doGenerateSubmoduleConfigurations: false, \
                         extensions: [], submoduleCfg: [], \
                         userRemoteConfigs: [[credentialsId: 'dfa6f5a3-608c-4f05-bb23-3c096c4cc430', \
                         url: 'https://mrjenkins@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
                 }
-                
-                dir('www') {
-                    checkout poll: true, scm: [$class: 'SubversionSCM', filterChangelog: false, \
-                        ignoreDirPropChanges: false, \
-                        locations: [[credentialsId: '90e7e239-48b2-455a-a72e-68522c3e70fd', \
-                        depthOption: 'infinity', ignoreExternalsOption: false, \
-                        local: '.', remote: 'https://svn.contentserv.com/development/branches/CS18/CS18.0/admin']], \
-                        workspaceUpdater: [$class: 'UpdateUpdater']]
                 }
-}
-}
+		}
 
-
-stage('Submit to APT Repository') {
+stage('Build Docker Images') {
             agent any
             steps {
                 sh 'touch test1'
                 sh 'cp -f test1 /mnt/Docker-push-dir/'
-            }
+        sh 'cd Docker-18.0 && make build-all'
+        }
         }
 
-
+stage('Submit Docker Images to Docker registry') {
+            agent any
+            steps {
+        sh 'docker push cs-docker.contentserv.com/dev/cs-ubuntu-php:CS18.0'
+	sh 'docker push cs-docker.contentserv.com/dev/cs-centos-php:CS18.0'
+	sh 'docker push cs-docker.contentserv.com/dev/cs-mariadb:CS18.0'
+	sh 'docker push cs-docker.contentserv.com/dev/cs-mysql:CS18.0'
+	sh 'docker push cs-docker.contentserv.com/test/cs-mariadb-test:CS18.0'
+        }
+        }
 }    
     post {
         success {
