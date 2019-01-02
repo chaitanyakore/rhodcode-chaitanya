@@ -40,6 +40,7 @@ stage('Build Docker Images') {
 stage('Submit Docker Images to Docker registry') {
             agent any
             steps {
+	sh 'cat /Jenkins-CI/cs_docker__password.txt | docker login cs-docker.contentserv.com --username cschaitanya --password-stdin '
         sh 'docker push cs-docker.contentserv.com/dev/cs-ubuntu-php:CS18.0'
 	sh 'docker push cs-docker.contentserv.com/dev/cs-centos-php:CS18.0'
 	sh 'docker push cs-docker.contentserv.com/dev/cs-mariadb:CS18.0'
