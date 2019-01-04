@@ -28,11 +28,16 @@ pipeline {
                         workspaceUpdater: [$class: 'UpdateUpdater']]
                }
                 
-          sh 'cd www/CS18_FDEV-1130/admin.test && make test-all'
 }
-		}
+		}        
 
+stage('Codeception test') {
+            agent any
+            steps {
+        sh 'cd www/admin.test && make test-all'
         }
+        }
+}
 
 post {
         success {
