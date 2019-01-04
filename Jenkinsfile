@@ -4,12 +4,8 @@ pipeline {
     agent none
     stages {
         stage('Codeception') {
-           agent {
-                dockerfile {
-                    dir 'deb-packager' 
-                }
-            }
-            steps {
+           agent any
+               steps {
                 emailext (
                     subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                     body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
