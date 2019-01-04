@@ -23,20 +23,14 @@ pipeline {
                         local: '.', remote: 'https://svn.contentserv.com/development/branches/features/CS18_FDEV-1130/']], \
                         workspaceUpdater: [$class: 'UpdateUpdater']]
                }
-                }
+                
+          sh 'cd /Jenkins-CI/workspace/CS-Codeception-Test/www/CS18_FDEV-1130/admin.test && make test-all'
+}
 		}
 
-stage('Test-all') {
-            agent any
-            steps {
-                sh 'cd /Jenkins-CI/workspace/CS-Codeception-Test/www/CS18_FDEV-1130/admin.test && make test-all'
-               
-        
-        }
         }
 
-}    
-    post {
+post {
         success {
             emailext (
                 subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
