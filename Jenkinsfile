@@ -3,12 +3,8 @@
 pipeline {
     agent none
     stages {
-        stage('Build .deb packages') {
-            agent {
-                dockerfile {
-                    dir 'deb-packager'
-                }
-            }
+        stage('Codeception') {
+            agent any
             steps {
                 emailext (
                     subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
@@ -18,36 +14,27 @@ pipeline {
                     to: "chaitanya.kore@contentserv.com"
                 )
                 
-                dir('Docker-18.0') {
-                    checkout poll: false, scm: [$class: 'GitSCM', \
-                        branches: [[name: '*/CS18.0']], doGenerateSubmoduleConfigurations: false, \
-                        extensions: [], submoduleCfg: [], \
-                        userRemoteConfigs: [[credentialsId: 'dfa6f5a3-608c-4f05-bb23-3c096c4cc430', \
-                        url: 'https://mrjenkins@git.contentserv.com/DevOps/Deployment/CS-Docker-Infrastructure']]]
-                }
+
+               dir('www') {
+                    checkout poll: true, scm: [$class: 'SubversionSCM', filterChangelog: false, \
+                        ignoreDirPropChanges: false, \
+                        locations: [[credentialsId: '90e7e239-48b2-455a-a72e-68522c3e70fd', \
+                        depthOption: 'infinity', ignoreExternalsOption: false, \
+                        local: '.', remote: 'https://svn.contentserv.com/development/branches/features/CS18_FDEV-1130/']], \
+                        workspaceUpdater: [$class: 'UpdateUpdater']]
+               }
                 }
 		}
 
-stage('Build Docker Images') {
+stage('Test-all') {
             agent any
             steps {
-                sh 'touch test1'
-                sh 'cp -f test1 /mnt/Docker-push-dir/'
-        sh 'cd Docker-18.0 && make build-all'
+                sh 'cd www/CS18_FDEV-1130/admin.test && make test-all'
+               
+        
         }
         }
 
-stage('Submit Docker Images to Docker registry') {
-            agent any
-            steps {
-	sh 'cat /Jenkins-CI/cs_docker__password.txt | docker login cs-docker.contentserv.com --username cschaitanya --password-stdin '
-        sh 'docker push cs-docker.contentserv.com/dev/cs-ubuntu-php:CS18.0'
-	sh 'docker push cs-docker.contentserv.com/dev/cs-centos-php:CS18.0'
-	sh 'docker push cs-docker.contentserv.com/dev/cs-mariadb:CS18.0'
-	sh 'docker push cs-docker.contentserv.com/dev/cs-mysql:CS18.0'
-	sh 'docker push cs-docker.contentserv.com/test/cs-mariadb-test:CS18.0'
-        }
-        }
 }    
     post {
         success {
