@@ -24,7 +24,7 @@ pipeline {
                         workspaceUpdater: [$class: 'UpdateUpdater']]
                }
                 
-          sh 'cd /Jenkins-CI/workspace/CS-Codeception-Test/www/CS18_FDEV-1130/admin.test && make test-all'
+          sh 'cd www/CS18_FDEV-1130/admin.test && make test-all'
 }
 		}
 
