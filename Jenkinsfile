@@ -47,6 +47,7 @@ stage('Submit Docker Images to Docker registry') {
 	sh 'docker push cs-docker.contentserv.com/dev/cs-mysql:CS18.0'
 	sh 'docker push cs-docker.contentserv.com/test/cs-mariadb-test:CS18.0'
         }
+
         }
 }    
     post {
